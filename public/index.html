@@ -4,6 +4,7 @@
     <link rel="stylesheet" type="text/css" href="tic-tac-toe.css">
     <script src="http://fb.me/react-0.12.0.js"></script>
     <script src="http://fb.me/JSXTransformer-0.12.0.js"></script>
+    <script src="jxs_compressed.js"></script>
   </head>
   <body>
     <h1>Tic Tac Toe</h1>
@@ -43,12 +44,14 @@
                     " ", " ", " "
                   ],
                   turn: "o",
+                  gameId : (Math.random() * 0x100000000).toString(10)
                 };
               },
               squareClick: function(position, player) {
                 var squares = this.state.squares;
                 if ( (squares[position] === 'x' || squares[position] === 'o') ) return;
                 squares[position] = player;
+                jx.load('http://localhost:4000/tictactoe/eventstream?position=' + position + '&player=' + player + '&gameId=' + this.state.gameId, 'text', 'get');
                 this.setState({squares: squares, turn: player === "o" ? "x" : "o"});
                 this.checkWin();
               },
