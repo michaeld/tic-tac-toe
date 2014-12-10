@@ -51,7 +51,7 @@
                 var squares = this.state.squares;
                 if ( (squares[position] === 'x' || squares[position] === 'o') ) return;
                 squares[position] = player;
-                jx.load('http://localhost:4000/tictactoe/eventstream?position=' + position + '&player=' + player + '&gameId=' + this.state.gameId, 'text', 'get');
+                jx.load('/tictactoe/recordplayermark?position=' + position + '&player=' + player + '&gameId=' + this.state.gameId, 'text', 'get');
                 this.setState({squares: squares, turn: player === "o" ? "x" : "o"});
                 this.checkWin();
               },
@@ -68,8 +68,10 @@
                 var diagTwo = squares[6] + squares[4] + squares[2];
  
                 if ( ("xxx" === rowOne) || ("xxx" === rowTwo) || ("xxx" === rowThree) || ("xxx" === colOne) || ("xxx" === colTwo) || ("xxx" === colThree) || ("xxx" === diagOne) || ("xxx" === diagTwo) ) {
+                  jx.load('/tictactoe/recordoutcome?player=' + player + '&gameId=' + this.state.gameId, 'text', 'get');
                   alert("x wins");
                 } else if ( ("ooo" === rowOne) || ("ooo" === rowTwo) || ("ooo" === rowThree) || ("ooo" === colOne) || ("ooo" === colTwo) || ("ooo" === colThree) || ("ooo" === diagOne) || ("ooo" === diagTwo) ) {
+                  jx.load('/tictactoe/recordoutcome?player=' + player + '&gameId=' + this.state.gameId, 'text', 'get');
                   alert("o wins");
                 }
               },
