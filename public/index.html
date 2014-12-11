@@ -44,6 +44,7 @@
                     " ", " ", " "
                   ],
                   turn: "o",
+                  move: 0,
                   gameId : (Math.random() * 0x100000000).toString(10)
                 };
               },
@@ -51,8 +52,8 @@
                 var squares = this.state.squares;
                 if ( (squares[position] === 'x' || squares[position] === 'o') ) return;
                 squares[position] = player;
-                jx.load('/tictactoe/recordplayermark?position=' + position + '&player=' + player + '&gameId=' + this.state.gameId, 'text', 'get');
-                this.setState({squares: squares, turn: player === "o" ? "x" : "o"});
+                jx.load('/tictactoe/recordplayermark?position=' + position + '&player=' + player + '&gameId=' + this.state.gameId + '&move=' + this.state.move, 'text', 'get');
+                this.setState({squares: squares, turn: player === "o" ? "x" : "o", move: ++this.state.move});
                 this.checkWin();
               },
               checkWin: function(position, player) {
